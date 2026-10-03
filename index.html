@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Interactive Expense Tracker built with HTML5, CSS3, JavaScript and LocalStorage."
+    >
+
+    <meta name="theme-color" content="#0f172a">
+
+    <title>ExpenseFlow | Interactive Expense Tracker</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="app-shell">
+
+        <!-- ================= HEADER ================= -->
+        <header class="topbar">
+
+            <div class="brand">
+                <div class="brand-icon">₹</div>
+
+                <div>
+                    <h1>ExpenseFlow</h1>
+                    <p>Personal Expense Tracker</p>
+                </div>
+            </div>
+
+            <div class="storage-status">
+                <span class="status-dot"></span>
+                Local Storage
+            </div>
+
+        </header>
+
+
+        <!-- ================= MAIN ================= -->
+        <main class="main-container">
+
+            <!-- Page Heading -->
+            <section class="page-heading">
+
+                <div>
+                    <span class="eyebrow">TASK 41 • WEB DEVELOPMENT</span>
+
+                    <h2>
+                        Interactive Expense
+                        <span>Tracker</span>
+                    </h2>
+
+                    <p>
+                        Add, manage and analyse your daily expenses
+                        directly in your browser.
+                    </p>
+                </div>
+
+            </section>
+
+
+            <!-- ================= SUMMARY ================= -->
+            <section class="summary-grid">
+
+                <article class="summary-card total-card">
+
+                    <div class="summary-top">
+                        <span>Total Spending</span>
+                        <span class="summary-icon">₹</span>
+                    </div>
+
+                    <strong id="totalAmount">
+                        ₹0.00
+                    </strong>
+
+                    <small id="expenseCount">
+                        0 expenses
+                    </small>
+
+                </article>
+
+
+                <article class="summary-card">
+
+                    <div class="summary-top">
+                        <span>Visible Expenses</span>
+                        <span class="summary-icon">#</span>
+                    </div>
+
+                    <strong id="visibleCount">
+                        0
+                    </strong>
+
+                    <small>
+                        Based on current filters
+                    </small>
+
+                </article>
+
+
+                <article class="summary-card">
+
+                    <div class="summary-top">
+                        <span>Categories</span>
+                        <span class="summary-icon">◈</span>
+                    </div>
+
+                    <strong id="categoryCount">
+                        0
+                    </strong>
+
+                    <small>
+                        Categories used
+                    </small>
+
+                </article>
+
+            </section>
+
+
+            <!-- ================= CONTENT GRID ================= -->
+            <section class="content-grid">
+
+
+                <!-- ================= FORM ================= -->
+                <article class="panel form-panel">
+
+                    <div class="panel-heading">
+
+                        <div>
+                            <span class="panel-label">EXPENSE ENTRY</span>
+
+                            <h3 id="formTitle">
+                                Add New Expense
+                            </h3>
+                        </div>
+
+                        <button
+                            type="button"
+                            class="reset-form-btn"
+                            id="resetFormBtn"
+                        >
+                            Reset
+                        </button>
+
+                    </div>
+
+
+                    <form id="expenseForm">
+
+                        <input
+                            type="hidden"
+                            id="expenseId"
+                        >
+
+
+                        <!-- Title -->
+                        <div class="form-group">
+
+                            <label for="title">
+                                Expense Title
+                            </label>
+
+                            <input
+                                type="text"
+                                id="title"
+                                placeholder="e.g. Groceries"
+                                maxlength="80"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- Amount -->
+                        <div class="form-group">
+
+                            <label for="amount">
+                                Amount
+                            </label>
+
+                            <div class="input-with-symbol">
+
+                                <span>₹</span>
+
+                                <input
+                                    type="number"
+                                    id="amount"
+                                    placeholder="0.00"
+                                    min="0.01"
+                                    step="0.01"
+                                    required
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Category -->
+                        <div class="form-group">
+
+                            <label for="category">
+                                Category
+                            </label>
+
+                            <select
+                                id="category"
+                                required
+                            >
+
+                                <option value="">
+                                    Select category
+                                </option>
+
+                                <option value="Food">
+                                    Food
+                                </option>
+
+                                <option value="Transport">
+                                    Transport
+                                </option>
+
+                                <option value="Shopping">
+                                    Shopping
+                                </option>
+
+                                <option value="Bills">
+                                    Bills & Utilities
+                                </option>
+
+                                <option value="Education">
+                                    Education
+                                </option>
+
+                                <option value="Entertainment">
+                                    Entertainment
+                                </option>
+
+                                <option value="Health">
+                                    Health
+                                </option>
+
+                                <option value="Other">
+                                    Other
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Date -->
+                        <div class="form-group">
+
+                            <label for="date">
+                                Date
+                            </label>
+
+                            <input
+                                type="date"
+                                id="date"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- Submit -->
+                        <button
+                            type="submit"
+                            class="primary-btn"
+                            id="submitBtn"
+                        >
+                            <span id="submitBtnText">
+                                Add Expense
+                            </span>
+
+                            <span>＋</span>
+                        </button>
+
+                    </form>
+
+
+                    <div
+                        class="form-message"
+                        id="formMessage"
+                        aria-live="polite"
+                    ></div>
+
+                </article>
+
+
+
+                <!-- ================= EXPENSE LIST ================= -->
+                <article class="panel list-panel">
+
+                    <div class="panel-heading">
+
+                        <div>
+                            <span class="panel-label">
+                                TRANSACTION HISTORY
+                            </span>
+
+                            <h3>
+                                Your Expenses
+                            </h3>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Search -->
+                    <div class="search-box">
+
+                        <span>⌕</span>
+
+                        <input
+                            type="search"
+                            id="searchInput"
+                            placeholder="Search expenses..."
+                        >
+
+                    </div>
+
+
+                    <!-- Filters -->
+                    <div class="filters">
+
+                        <div class="filter-group">
+
+                            <label for="filterCategory">
+                                Category
+                            </label>
+
+                            <select id="filterCategory">
+
+                                <option value="All">
+                                    All Categories
+                                </option>
+
+                                <option value="Food">
+                                    Food
+                                </option>
+
+                                <option value="Transport">
+                                    Transport
+                                </option>
+
+                                <option value="Shopping">
+                                    Shopping
+                                </option>
+
+                                <option value="Bills">
+                                    Bills & Utilities
+                                </option>
+
+                                <option value="Education">
+                                    Education
+                                </option>
+
+                                <option value="Entertainment">
+                                    Entertainment
+                                </option>
+
+                                <option value="Health">
+                                    Health
+                                </option>
+
+                                <option value="Other">
+                                    Other
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="filter-group">
+
+                            <label for="filterDate">
+                                Date
+                            </label>
+
+                            <input
+                                type="date"
+                                id="filterDate"
+                            >
+
+                        </div>
+
+
+                        <div class="filter-group">
+
+                            <label for="sortExpenses">
+                                Sort
+                            </label>
+
+                            <select id="sortExpenses">
+
+                                <option value="newest">
+                                    Newest First
+                                </option>
+
+                                <option value="oldest">
+                                    Oldest First
+                                </option>
+
+                                <option value="high">
+                                    Amount: High → Low
+                                </option>
+
+                                <option value="low">
+                                    Amount: Low → High
+                                </option>
+
+                                <option value="az">
+                                    Title: A → Z
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Expense List -->
+                    <div
+                        class="expense-list"
+                        id="expenseList"
+                    ></div>
+
+
+                    <!-- Empty State -->
+                    <div
+                        class="empty-state"
+                        id="emptyState"
+                        hidden
+                    >
+
+                        <div class="empty-icon">
+                            ₹
+                        </div>
+
+                        <h4>
+                            No expenses found
+                        </h4>
+
+                        <p>
+                            Add your first expense or change
+                            the current filters.
+                        </p>
+
+                    </div>
+
+                </article>
+
+            </section>
+
+
+            <!-- ================= CATEGORY SUMMARY ================= -->
+            <section class="panel category-panel">
+
+                <div class="panel-heading">
+
+                    <div>
+                        <span class="panel-label">
+                            SPENDING BREAKDOWN
+                        </span>
+
+                        <h3>
+                            Category Summary
+                        </h3>
+                    </div>
+
+                </div>
+
+                <div
+                    class="category-summary"
+                    id="categorySummary"
+                ></div>
+
+            </section>
+
+        </main>
+
+
+        <!-- ================= FOOTER ================= -->
+        <footer class="footer">
+
+            <p>
+                ExpenseFlow • Task 41
+            </p>
+
+            <span>
+                HTML5 • CSS3 • JavaScript • LocalStorage
+            </span>
+
+        </footer>
+
+    </div>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+    <script src="script.js"></script>
+
+</body>
+</html>
